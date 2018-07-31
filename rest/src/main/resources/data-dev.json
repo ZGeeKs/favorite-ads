@@ -1,0 +1,21 @@
+{
+  "users": {
+    "134-djkjdkje-3u4ud": {
+      "favorites": [
+        {
+          "id": "1",
+          "title": "Vente ",
+          "content": "tati",
+          "creation-date": "2018-07-30T22:44:36.475Z"
+        },
+        {
+          "id": "2",
+          "title": "Vente ",
+          "content": "toto",
+          "creation-date": "2018-07-30T23:37:00.881Z"
+        }
+      ]
+    }
+  }
+
+}

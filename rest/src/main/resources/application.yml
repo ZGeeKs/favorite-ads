@@ -1,0 +1,20 @@
+spring:
+  data:
+    mongodb:
+      port: 27017
+
+server:
+  port: 8080
+  servlet:
+    path: /s
+    context-path: /favorite-ads
+
+favorite:
+  ads:
+    security:
+      permitted:
+        path: /probe,/s/health,/s/info,/application.wadl,/swagger,/swagger.json,/swagger.yaml,/1.0.0/users/**
+
+spring:
+  jersey:
+    type: filter

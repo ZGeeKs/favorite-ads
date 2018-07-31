@@ -1,0 +1,29 @@
+public class {{classname}} {{#serializableModel}}implements Serializable {{/serializableModel}}{
+    {{#serializableModel}}
+    private static final long serialVersionUID = 1L;
+    {{/serializableModel}}
+
+   {{#vars}}
+   {{#-first}}
+
+    private final {{{datatypeWithEnum}}} value;
+
+    {{#jackson}}
+    @JsonCreator
+    {{/jackson}}
+    public {{classname}} (
+    {{{datatypeWithEnum}}} value
+    ){
+        this.value = value;
+    }
+
+    {{#jackson}}
+    @JsonValue
+    {{/jackson}}
+    public {{{datatypeWithEnum}}} value() {
+        return this.value;
+    }
+
+   {{/-first}}
+   {{/vars}}
+}

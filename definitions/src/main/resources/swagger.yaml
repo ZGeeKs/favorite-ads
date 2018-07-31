@@ -1,0 +1,120 @@
+swagger: "2.0"
+info:
+  description: "Favorites Ads backend apis"
+  version: "1.0.0"
+  title: "Avito favorites api"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "bennejarazakaria@gmail.com"
+host: "us-central1-mailcaller-9ba94.cloudfunctions.net"
+securityDefinitions:
+    Bearer:
+        type: apiKey
+        name: Authorization
+        in: header
+basePath: "/"
+tags:
+- name: "/favorites"
+  description: "Everything about your favorites ads"
+
+schemes:
+- "https"
+paths:
+  /users/{userId}/favorites:
+    post:
+      tags:
+      - "/favorites"
+      summary: "Add a new ad"
+      description: "Send mail content to the api"
+      operationId: "saveFavoriteAd"
+      consumes:
+      - "application/json"
+
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: "user uid"
+        - in: body
+          name: body
+          description: "Message body that contains information about the email content"
+          required: true
+          schema:
+            $ref: "#/definitions/FavoriteAd"
+      responses:
+        200:
+          description: "successful operation"
+        405:
+          description: "Invalid input"
+        401:
+          description: "Token has expired. Get a fresh token"
+        500:
+          description: "Error when trying to handle the request"
+      security:
+      - Bearer: []
+    get:
+      tags:
+        - "/favorites"
+      description: "Send mail content to the api"
+      operationId: "favorites"
+      produces:
+      - "application/json"
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: "user uid"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/FavoriteAd"
+        401:
+          description: "Token has expired. Get a fresh token"
+        500:
+          description: "Error when trying to handle the request"
+
+definitions:
+  FavoriteAd:
+    type: object
+    required:
+    - "id"
+    - "title"
+    - "creation-date"
+    properties:
+      id:
+        type: "string"
+        example: "Hi swagger !"
+      title:
+        type: "string"
+        example: "Hi swagger !"
+      location:
+        type: "string"
+        example: "swagger.api@swagger"
+      content:
+        type: "string"
+        example: "some thing usefull"
+      creation-date:
+        type: "string"
+        format: "date-time"
+        example: "swagger.api@swagger"
+
+  SaveFavoriteResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+
+  FavoritesResponse:
+    type: array
+    items:
+      $ref: '#/definitions/FavoriteAd'
