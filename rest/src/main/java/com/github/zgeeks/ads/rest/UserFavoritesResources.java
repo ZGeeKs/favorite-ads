@@ -6,10 +6,9 @@ import com.github.zgeeks.ads.ImmutableUserFavorites;
 import com.github.zgeeks.ads.handler.UsersApi;
 import com.github.zgeeks.ads.model.FavoriteAd;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
-import java.time.ZoneOffset;
+import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -20,10 +19,12 @@ public class UserFavoritesResources implements UsersApi {
 
     private final FavoritesService favoritesService;
     private final Supplier<Instant> clock;
+    private final Supplier<String> uuidGenerator;
 
-    public UserFavoritesResources(FavoritesService favoritesService, Supplier<Instant> clock) {
+    public UserFavoritesResources(FavoritesService favoritesService, Supplier<Instant> clock, Supplier<String> uuidGenerator) {
         this.favoritesService = favoritesService;
         this.clock = clock;
+        this.uuidGenerator = uuidGenerator;
     }
 
     @Override
@@ -32,11 +33,11 @@ public class UserFavoritesResources implements UsersApi {
             .stream()
             .flatMap(userFavorites -> userFavorites.favorites().stream())
             .map(ad -> new FavoriteAdBuilder()
-                    .withContent(ad.content())
-                    .withCreationDate(ad.createdDate())
-                    .withId(ad.id())
-                    .withTitle(ad.title())
-                    .create())
+                .withContent(ad.content())
+                .withCreationDate(ad.createdDate())
+                .withId(ad.id())
+                .withTitle(ad.title())
+                .create())
             .collect(Collectors.toList())).build();
     }
 
@@ -45,7 +46,7 @@ public class UserFavoritesResources implements UsersApi {
         favoritesService.save(ImmutableUserFavorites
             .builder()
             .userId(userId)
-            .addFavorites(Ad.create(body.getId(),
+            .addFavorites(Ad.create(uuidGenerator.get(),
                 body.getTitle(),
                 body.getContent(),
                 clock.get().now()))

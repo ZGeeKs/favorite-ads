@@ -48,6 +48,6 @@ public class CoreConfig {
 
     @Bean
     public UsersApi userFavoritesResources() {
-        return new UserFavoritesResources(favoritesService(), clock());
+        return new UserFavoritesResources(favoritesService(), clock(), idSupplier());
     }
 }
