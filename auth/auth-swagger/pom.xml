@@ -6,11 +6,12 @@
 
     <parent>
         <groupId>com.github.zgeeks</groupId>
-        <artifactId>ads-favorites</artifactId>
+        <artifactId>auth</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>definitions</artifactId>
+    <artifactId>auth-swagger</artifactId>
+
     <packaging>jar</packaging>
 
     <properties>
@@ -111,10 +112,10 @@
                             <inputSpec>${swagger.desc.dir}/${swagger.desc.filename}</inputSpec>
                             <language>${swagger-language}</language>
                             <modelPackage>
-                                ${project.groupId}.ads.model${swagger-codegen-package-suffix}
+                                ${project.groupId}.ads.auth.server.model${swagger-codegen-package-suffix}
                             </modelPackage>
                             <apiPackage>
-                                ${project.groupId}.ads.handler${swagger-codegen-package-suffix}
+                                ${project.groupId}.ads.auth.server.handler${swagger-codegen-package-suffix}
                             </apiPackage>
                             <verbose>false</verbose>
                             <generateSupportingFiles>false</generateSupportingFiles>
@@ -136,4 +137,5 @@
             </plugin>
         </plugins>
     </build>
+    
 </project>

@@ -1,0 +1,12 @@
+secret: 123456
+
+authentication:
+  code:
+    expiration: 100
+
+register:
+  server:
+    url: http://kjdkjd.com
+
+auhentication:
+  client-id: my-client-id

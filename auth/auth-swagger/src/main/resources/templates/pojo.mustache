@@ -1,0 +1,158 @@
+/**
+ * {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
+ */{{#description}}
+@ApiModel(description = "{{{description}}}"){{/description}}
+{{>generatedAnnotation}}
+{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}
+public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {{#serializableModel}}implements Serializable{{/serializableModel}} {
+  {{#vars}}
+    {{#isEnum}}
+    {{^isContainer}}
+{{>enumClass}}
+    {{/isContainer}}
+    {{/isEnum}}
+    {{#items.isEnum}}
+      {{#items}}
+      {{^isContainer}}
+{{>enumClass}}
+      {{/isContainer}}
+      {{/items}}
+    {{/items.isEnum}}
+
+  {{#gson}}
+  @SerializedName("{{baseName}}")
+  {{/gson}}
+  private final {{{datatypeWithEnum}}} {{name}};
+  {{/vars}}
+
+  {{#jackson}}
+  @JsonCreator
+  public {{classname}} ({{#allVars}}
+                          @JsonProperty("{{baseName}}") {{{datatypeWithEnum}}} {{name}}{{#hasMore}},{{/hasMore}}
+                        {{/allVars}}
+                       ){
+      {{#parentVars}}
+        {{#-first}}super({{/-first}}
+      {{/parentVars}}
+
+      {{#parentVars}}
+        {{name}}{{#hasMore}}, {{/hasMore}}
+      {{/parentVars}}
+
+      {{#parentVars}}
+        {{#-first}});{{/-first}}
+      {{/parentVars}}
+      {{#vars}}
+          this.{{name}} = {{name}};
+      {{/vars}}
+  }
+  {{/jackson}}
+
+  {{#vars}}
+   /**
+  {{#description}}
+   * {{{description}}}
+  {{/description}}
+  {{^description}}
+   * Get {{name}}
+  {{/description}}
+  {{#minimum}}
+   * minimum: {{minimum}}
+  {{/minimum}}
+  {{#maximum}}
+   * maximum: {{maximum}}
+  {{/maximum}}
+   * @return {{name}}
+  **/
+
+  @ApiModelProperty({{#example}}example = "{{example}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+  {{#jackson}}
+  @JsonProperty("{{baseName}}")
+  {{/jackson}}
+  public {{{datatypeWithEnum}}} {{getter}}() {
+       return {{name}};
+  }
+
+  {{/vars}}
+
+  {{^isArrayModel}}
+  boolean hasOnlyNullValues() {
+    {{#hasVars}}
+    return {{#vars}} this.{{getter}}() == null
+           {{#hasMore}} && {{/hasMore}}{{/vars}}
+           {{#parentModel}} && super.hasOnlyNullValues(){{/parentModel}};
+    {{/hasVars}}
+    {{^hasVars}}
+      {{#parentModel}} return super.hasOnlyNullValues();{{/parentModel}}
+      {{^parentModel}} return true;{{/parentModel}}
+    {{/hasVars}}
+  }
+
+  public {{classname}} nullIfEmpty(){
+    return hasOnlyNullValues() ? null : this;
+  }
+  {{/isArrayModel}}
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }{{#hasVars}}
+    {{classname}} {{classVarName}} = ({{classname}}) o;
+    return {{#vars}}
+         Objects.equals(this.{{getter}}(), {{classVarName}}.{{getter}}()){{#hasMore}} &&
+        {{/hasMore}}
+        {{/vars}}{{#parent}} &&
+        super.equals(o){{/parent}};{{/hasVars}}{{^hasVars}}
+    return true;{{/hasVars}}
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash({{#vars}}
+    {{getter}}(){{#hasMore}}, {{/hasMore}}
+    {{/vars}}{{#parent}}{{#hasVars}}, {{/hasVars}}super.hashCode(){{/parent}});
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class {{classname}} {\n");
+    {{#parent}}sb.append("    ").append(toIndentedString(super.toString())).append("\n");{{/parent}}
+    {{#vars}}
+      sb.append("    {{name}}: ").append(toIndentedString({{name}})).append("\n");
+    {{/vars}}sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
+   public static final class {{classname}}Builder {
+
+   {{#allVars}}
+       private {{{datatypeWithEnum}}} {{name}};
+   {{/allVars}}
+
+    {{#allVars}}
+       public {{classname}}Builder with{{nameInCamelCase}}({{{datatypeWithEnum}}} {{name}}) {
+           this.{{name}} = {{name}};
+           return this;
+       }
+    {{/allVars}}
+       public {{classname}} create(){
+           return new {{classname}}({{#allVars}}this.{{name}}{{#hasMore}}, {{/hasMore}}{{/allVars}});
+       }
+    }
+}
