@@ -11,7 +11,7 @@ import java.time.Clock;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@PropertySource("classpath:auth-server.yaml")
+@PropertySource("classpath:auth-server.yml")
 public class PropertyConfig {
 
     private static final String ENCODING = "UTF-8";

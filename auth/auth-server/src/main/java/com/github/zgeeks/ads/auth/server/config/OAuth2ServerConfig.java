@@ -30,5 +30,4 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         endpoints.authenticationManager(webConfig.authenticationManagerBean());
         endpoints.tokenServices(resourceConfig.tokenServices());
     }
-
 }

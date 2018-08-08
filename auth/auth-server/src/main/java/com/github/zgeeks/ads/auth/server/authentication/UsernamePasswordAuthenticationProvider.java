@@ -1,7 +1,7 @@
 package com.github.zgeeks.ads.auth.server.authentication;
 
-import com.github.zgeeks.ads.auth.core.JwtUserDetails;
-import com.github.zgeeks.ads.auth.core.JwtUserDetailsService;
+import com.github.zgeeks.ads.auth.JwtUserDetails;
+import com.github.zgeeks.ads.auth.JwtUserDetailsService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

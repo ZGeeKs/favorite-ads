@@ -10,10 +10,7 @@ public class ServerSettings {
     @Value("${authentication.code.expiration:10}")
     private Integer authenticationCodeExpirationInSeconds;
 
-    @Value("${register.server.url}")
-    private String registerServerUrl;
-
-    @Value("${auhentication.client-id}")
+    @Value("${authentication.client-id}")
     private String authenticationClientId;
 
 
@@ -24,11 +21,6 @@ public class ServerSettings {
     public int getAuthenticationCodeExpirationInSeconds() {
         return authenticationCodeExpirationInSeconds;
     }
-
-    public String getRegisterServerUrl() {
-        return registerServerUrl;
-    }
-
 
     public String getAuthenticationClientId() {
         return authenticationClientId;

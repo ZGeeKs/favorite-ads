@@ -3,10 +3,8 @@ secret: 123456
 authentication:
   code:
     expiration: 100
+  client-id: my-client-id
 
 register:
   server:
     url: http://kjdkjd.com
-
-auhentication:
-  client-id: my-client-id
